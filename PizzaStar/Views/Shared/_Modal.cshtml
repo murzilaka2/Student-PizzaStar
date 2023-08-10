@@ -1,0 +1,19 @@
+﻿@model string
+
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтвердите действие</h5>
+            </div>
+            <div class="modal-body">
+                <p>@Model</p>
+            </div>
+            <div class="modal-footer">
+                @*Обязательно прописываем ID*@
+                <button id="btn-Yes" class="btn btn-secondary">Удалить</button>
+                <button id="btn-No" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>

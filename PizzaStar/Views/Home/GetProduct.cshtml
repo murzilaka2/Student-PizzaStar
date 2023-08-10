@@ -1,0 +1,143 @@
+﻿@using PizzaStar.ViewModels;
+@model CurrentProductViewModel
+@{
+    ViewData["Title"] = Model.Product.Name;
+}
+<div class="blog-section buttercrust">
+    <div class="container">
+        <div class="row">
+            <div id="content" class="col-sm-12">
+                <div class="breadcrumb-main">
+                    <div class="breadcrumb-container clearfix">
+                        <a href="@Model.ReturnUrl"> <p class="page-title">Назад </p></a>
+                        <ul class="breadcrumb">
+                            <li>
+                                <a asp-controller="Home" asp-action="Index">Главная</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Home" asp-action="Index"
+                                   asp-route-categoryId="@Model.Product.CategoryId">
+                                    @Model.Product.Category.Name
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Home" asp-action="GetProduct"
+                                   asp-route-productId="@Model.Product.Id"
+                                   asp-route-returnUrl="@Model.ReturnUrl">
+                                    @Model.Product.Name
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pro-deatil product-content">
+                    <div class="row">
+                        <div class="col-sm-6 product-left">
+                            <div class="thumbnails">
+                                <div class="pro-image" id="img-1">
+                                    <span class="thumbnail">
+                                        <img src="@Model.Product.Image" title="@Model.Product.Name" id="prozoom"
+                                             alt="@Model.Product.Name" data-zoom-image="@Model.Product.Image">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 product-right">
+                            <h1>@Model.Product.Name</h1>
+                            <div class="rating">
+                                <div class="product-rating">
+                                    <span class="fa fa-stack"><i class="fa-regular fa-star"></i></span>
+                                    <span class="fa fa-stack"><i class="fa-regular fa-star"></i></span>
+                                    <span class="fa fa-stack"><i class="fa-regular fa-star"></i></span>
+                                    <span class="fa fa-stack"><i class="fa-regular fa-star"></i></span>
+                                    <span class="fa fa-stack"><i class="fa-regular fa-star"></i></span>
+                                </div>
+                                <a href="#" class="review">
+                                    0
+                                    отзывов
+                                </a>
+                                <a href="#" class="write-review" onclick="$('a[href=\'#special\']').tab('show'); $('body,html').animate({scrollTop:
+                                $('#myTabContent').offset().top-350}, 500); return false;"><i class="fa fa-pencil"></i>Оставьте отзыв</a>
+                            </div>
+                            <hr>
+                            <ul class="list-unstyled manufacturer-listpro">
+                                <li><span class="disc">Бренд:</span> @Model.Product.Brand </li>
+                                <li>
+                                    <span class="disc">Вес:</span> <span class="disc1">
+                                        @Model.Product.Weight
+                                        @(Model.Product.Type == ProductType.Drink ? "миллилитров" : "грамм")
+                                    </span>
+                                </li>
+                                <li><span class="disc">Калорийность:</span> <span class="disc1">@Model.Product.Calories</span></li>
+
+                            </ul>
+                            <hr>
+                            <ul class="list-unstyled">
+                                <li> <h2 class="pro_price">₴@Model.Product.Price</h2></li>
+                                <hr />
+                            </ul>
+                            <div id="product" class="product-option">
+                                <div class="form-group">
+                                    <div class="quantity-addcart">
+                                        <form method="post" asp-controller="ShopCart" asp-action="AddToCart" asp-route-isModal="false">
+                                            <input type="hidden" name="productId" value="@Model.Product.Id" />
+                                            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+
+                                            <div class="proquantity-detail">
+                                                <label class="control-label quantity-label" for="input-quantity">Количество</label>
+                                                <div class="product-btn-quantity">
+                                                    <button class="minus"><i class="fa fa-minus"></i></button>
+                                                    <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control">
+                                                    <button class="plus"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                            </div>
+
+                                            <div class="pro-cart">
+                                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                                    <span>Добавить в Корзину</span>
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs_1" class="propage-tab top-margin-all">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a href="product.html#latest" class="nav-link active hscp-hover" id="latest-tab"
+                               data-bs-toggle="tab" data-bs-target="#latest" type="" role="tab"
+                               aria-controls="latest" aria-selected="true"><span>Описание </span></a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a href="product.html#special" class="nav-link hscp-hover" id="special-tab"
+                               data-bs-toggle="tab" data-bs-target="#special" type="" role="tab"
+                               aria-controls="special" aria-selected="false"><span>Отзывы (0)</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="latest" role="tabpanel" aria-labelledby="latest-tab">
+                        <div class="tab-pane " id="tab-description">
+                            <p>@Model.Product.Description</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="special" role="tabpanel" aria-labelledby="special-tab">
+                        <form class="form-horizontal" id="form-review">
+                            <div id="review">
+                                <p>Еще никто не оставил отзыв. Будьте первыми.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @await Component.InvokeAsync("RelatedProducts", new { productId = Model.Product.Id})
+
+            </div>
+        </div>
+    </div>
+</div>

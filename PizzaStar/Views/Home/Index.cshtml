@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Product>
+
+<div class="blog-section donuts">
+    <div class="container">
+        <div class="row">
+
+            @await Html.PartialAsync("_ItemsFilter")
+
+            <div id="content" class="col-sm-9  all-blog">
+                <div class="breadcrumb-main">
+                    <div class="breadcrumb-container clearfix">
+                        <h1 class="page-title">@ViewData["Title"]</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="category-img col-sm-12">
+                        <img src="assets/images/banners/category_banner1.jpg" alt="donuts" title="donuts" class="img-thumbnail">
+                    </div>
+                    <div class="category-desc col-sm-12">
+                        <p>
+                            Добро пожаловать в <b>PizzaStar</b> - место, где наслаждение вкусом и качеством встречается с итальянским гостеприимством.
+                            Наша пиццерия - это настоящий рай для любителей пиццы, где вы сможете отведать аутентичные итальянские блюда, приготовленные
+                            с любовью и вниманием к деталям.
+                        </p>
+                        <p>
+                            Приходите в <b>PizzaStar</b> и окунитесь в атмосферу итальянской гостеприимности, насладитесь нежной и ароматной пиццей,
+                            и откройте для себя новые гастрономические впечатления, которые оставят вас влюбленными в итальянскую кухню. Добро пожаловать
+                            в мир вкуса и наслаждения!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="category-info">
+                    <div class="row">
+                        <div class="col-sm-2 col-xs-5 category-list-grid">
+                            <div class="btn-group btn-group-sm">
+                                <button type="button" id="grid-view" class="btn btn-default active"
+                                        data-toggle="tooltip" title="" data-original-title="Grid">
+                                    <i class="fa fa-th"></i>
+                                </button>
+                                <button type="button" id="list-view" class="btn btn-default"
+                                        data-toggle="tooltip" title="" data-original-title="List">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        @*Сортировка*@
+                        <div class="col-sm-7 col-xs-12 category-sorting">
+                            @{
+                                ViewBag.sorts = new string[] { "Name", "Category.Name", "Price", "Brand", "Calories", "Weight" };
+                            }
+                            @await Html.PartialAsync("_SortOptions", Model)
+                        </div>
+                    </div>
+                </div>
+
+                @*Поиск*@
+                <div class="category-info">
+                    <div class="input-group themability-search">
+                        @{
+                            ViewBag.searches = new string[] { "Name", "Brand", "Description", "Category.Name" };
+                        }
+                        @await Html.PartialAsync("_SearchOptions", Model)
+                    </div>
+                </div>
+
+                <div class="category-row row">
+                    @*Вывод продуктов*@
+                    @foreach (Product product in Model)
+                    {
+                        @await Html.PartialAsync("_Product", product)
+                    }
+                    <div id="updateDiv">
+                        <!-- AJAX данные будут загружены сюда -->
+                    </div>
+                </div>
+                <div class="pagination-main">
+                    @*Пагинация*@
+                    <div class="text-center">
+                        @await Html.PartialAsync("_Pages", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
+}

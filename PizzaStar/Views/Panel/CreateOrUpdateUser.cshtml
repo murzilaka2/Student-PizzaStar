@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "_PanelLayout.cshtml";
+    ViewData["Title"] = Model.Id is null ? "Добавление пользователя" : "Редактирование пользователя";
+}
+@using PizzaStar.ViewModels;
+@model CreateOrUpdateUserViewModel
+
+<div class="row justify-content-center">
+    <div class="col-sm-12">
+        <div class="well mt-5">
+            <h3>@(Model.Id is null ? "Добавление пользователя" : "Редактирование пользователя")</h3>
+            <form method="post" asp-controller="Panel" asp-action="CreateOrUpdateUser">
+                <div asp-validation-summary="ModelOnly"></div>
+
+                @if (Model.Id is not null)
+                {
+                    <input asp-for="Id" type="hidden" />
+                }
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Year" class="control-label"></label>
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                @if (Model.Id is null)
+                {
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PasswordConfirm" class="control-label"></label>
+                        <input asp-for="PasswordConfirm" class="form-control" />
+                        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Password" type="hidden" value="Update12!s##8)" />
+                    <input asp-for="PasswordConfirm" type="hidden" value="Update12!s##8)" />
+                }
+
+                <div class="mt-3"></div>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Для валидации модели на клиенте*@
+@await Html.PartialAsync("_ValidationScriptsPartial")

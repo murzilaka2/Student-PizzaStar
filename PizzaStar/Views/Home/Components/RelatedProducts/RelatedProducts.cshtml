@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Product>
+
+<div class="box related-products top-margin-all">
+    <div class="page-title">
+        <h3>Вам может понравится</h3>
+    </div>
+    <div class="row">
+        <div id="related-carousel"
+             class="box-product  product-carousel  clearfix owl-carousel owl-theme owl-loaded owl-drag"
+             data-items="4">
+            <div class="related-products-1 owl-stage">
+                @foreach (Product product in Model)
+                {
+                    <div class="owl-item">
+                        <div class="product-layout col-xs-12">
+                            <div class="product-thumb transition">
+                                <div class="image">
+                                    <a asp-controller="Home" asp-action="GetProduct" asp-route-productId="@product.Id"
+                                   asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()" class="thumb-image">
+                                        <img src="@product.Image" alt="@product.Name" title="@product.Name" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="product-description">
+                                    <div class="caption">
+                                        <div class="title-rating clearfix">
+                                            <h4 class="product-title">
+                                                <a asp-controller="Home" asp-action="GetProduct" asp-route-productId="@product.Id"
+                                               asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                                                    @product.Name
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div class="price-cartbtn clearfix">
+                                            <p class="price">₴@product.Price</p>
+                                            <p class="price">
+                                                (@product.Weight
+                                                @(product.Type == ProductType.Drink ? "миллилитров" : "грамм"))
+                                            </p>
+                                            <p class="description">@product.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

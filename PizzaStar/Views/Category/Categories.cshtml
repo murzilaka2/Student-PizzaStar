@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Panel/_PanelLayout.cshtml";
+    ViewData["Title"] = "Категории";
+}
+@model IEnumerable<Category>
+
+<div class="breadcrumb-main">
+    <div class="breadcrumb-container clearfix">
+        <h1 class="page-title">Панель управления</h1>
+        <ul class="breadcrumb">
+            <li><a asp-action="Index" asp-controller="Panel">Главная</a></li>
+            <li><a asp-action="Categories" asp-controller="Category">Категории</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row g-4 py-5 row-cols-1">
+
+    <a asp-action="CreateCategory" asp-controller="Category" class="btn btn-primary">Добавить новую категорию</a>
+
+    <div class="input-group themability-search">
+        @{
+            ViewBag.searches = new string[] { "Name", "Description" };
+        }
+        @await Html.PartialAsync("_SearchOptions", Model)
+    </div>
+
+    <div class="p-5 mb-4 bg-light rounded-3 ovx table-responsive">
+        <table class="table">
+            <tr><th>Название</th><th>Описание</th><th>Дата публикации</th><th></th><th></th></tr>
+            @foreach (var category in Model)
+            {
+                @*Обязательно прописываем данный атрибут
+            С помощью него мы удалим данную строку,
+            используя JavaScript*@
+                <tr data-rowid="@category.Id">
+                    <td>@category.Name</td>
+                    <td>@category.Description</td>
+                    <td>@category.DateOfPublication.ToShortDateString()</td>
+                    <td><a class="btn btn-sm btn-primary" asp-action="EditCategory" asp-controller="Category" asp-route-categoryId="@category.Id">Изменить</a></td>
+                    <td>
+                        @*Обязательно прописываем onClick и метод, который будет обрабатывать клик*@
+                        <button onclick="deleteCategory('@category.Id')" class="btn btn-sm btn-danger">Удалить</button>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div class="text-center">
+            @await Html.PartialAsync("_Pages", Model)
+        </div>
+
+        @await Html.PartialAsync("_Modal", "Удалить выбранную категорию?")
+
+
+        @section Scripts {
+            <script>
+                async function deleteCategory(categoryId) {
+
+                    const btnYes = document.getElementById('btn-Yes');
+                    const btnNo = document.getElementById('btn-No');
+
+                    console.log(categoryId);
+                    $('#confirmModal').modal('show');
+
+                    //Если нажали да, удаляем
+                    btnYes.onclick = () => {
+                        const deleteItem = fetch(`/panel/delete-category/?categoryId=${categoryId}`, { method: 'DELETE' })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                //Удаляем строку
+                                document.querySelector("tr[data-rowid='" + categoryId + "']").remove();
+                                //Закрываем модальное окно
+                                $('#confirmModal').modal('hide');
+                            })
+                            .catch(error => {
+                                console.error('There was a problem with the fetch operation:', error);
+                                // Обработка ошибки удаления
+                            });
+                    }
+                    //Если нажали нет, скрываем
+                    btnNo.onclick = () => {
+                        $('#confirmModal').modal('hide');
+                    }
+                }
+            </script>
+        }
+    </div>
+</div>

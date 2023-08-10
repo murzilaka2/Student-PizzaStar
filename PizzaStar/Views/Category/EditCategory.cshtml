@@ -1,0 +1,48 @@
+﻿@using PizzaStar.ViewModels;
+@{
+    Layout = "~/Views/Panel/_PanelLayout.cshtml";
+    ViewData["Title"] = "Редактирование категории";
+}
+@model CategoryViewModel
+
+<div class="row justify-content-center">
+    <div class="col-sm-12">
+        <div class="well mt-5">
+            <h3>Редактирование категории</h3>
+            <form asp-action="EditCategory" asp-controller="Category" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Название</label>
+                    <input type="text" asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Описание</label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="File" class="control-label">Изображение</label>
+                    @if (Model.Image != null)
+                    {
+                        <div class="category-img col-sm-3">
+                            <img src="@Model.Image" alt="@Model.Name" class="img-responsive">
+                        </div>
+                    }
+                    <input type="file" class="form-control" asp-for="File" accept="image/*" />
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Для валидации модели на клиенте*@
+@await Html.PartialAsync("_ValidationScriptsPartial")

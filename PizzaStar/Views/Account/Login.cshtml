@@ -1,0 +1,47 @@
+﻿@using PizzaStar.ViewModels;
+@model LoginViewModel
+
+<div class="row justify-content-center">
+    <div class="col-sm-4">
+        <div class="well mt-5">
+            <h3>Авторизация</h3>
+            <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+                <div asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="RememberMe" class="control-label"></label>
+                            <input asp-for="RememberMe" class="form-check" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a asp-action="ForgotPassword" asp-controller="Account">Забыли пароль?</a>
+                    </div>
+                </div>
+
+                <div class="mt-3"></div>
+
+                <div class="form-group">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Войти" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Для валидации модели на клиенте*@
+@await Html.PartialAsync("_ValidationScriptsPartial")

@@ -1,0 +1,137 @@
+﻿@using PizzaStar.Models.Cart;
+@model IEnumerable<ShopCartItem>
+@{
+    ViewData["Title"] = "Корзина";
+    decimal totalPrice = 0;
+}
+
+<div class="blog-section">
+    <div id="checkout-cart" class="container">
+        <div class="row">
+            <div id="content" class="col-sm-12">
+                <div class="breadcrumb-main">
+                    <div class="breadcrumb-container clearfix">
+                        <h1 class="page-title">Корзина</h1>
+                        <ul class="breadcrumb">
+                            <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                            <li><a asp-controller="ShopCart" asp-action="Index">Корзина</a></li>
+                        </ul>
+                    </div>
+                </div>
+                @if (Model.Count() > 0)
+                {
+                    <h1 class="cart-title">
+                        Ваш заказ
+                    </h1>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td class="text-center">Изображение</td>
+                                    <td class="text-left">Название</td>
+                                    <td class="text-left">Бренд</td>
+                                    <td class="text-left">Количество</td>
+                                    <td class="text-right">Цена за ед.</td>
+                                    <td class="text-right">Итог</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (ShopCartItem item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <img src="@item.Product.Image" alt="@item.Product.Name"
+                                         title="@item.Product.Name" class="img-thumbnail checkout-img">
+                                        </td>
+                                        <td class="text-left">
+                                            <a asp-controller="Home" asp-action="GetProduct" asp-route-productId="@item.Product.Id"
+                                       asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                                                @item.Product.Name
+                                            </a> <br>
+                                        </td>
+                                        <td class="text-left">@item.Product.Brand</td>
+                                        <td class="text-left">
+
+                                            <div class="input-group btn-block">
+                                                <div class="product-btn-quantity">
+                                                    <form method="post">
+                                                        <div class="product-btn-quantity">
+                                                            <button asp-controller="ShopCart" asp-action="DecrementQuantity"
+                                                            asp-route-shopCartItemId="@item.Id" type="submit">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+
+                                                            <input type="text" name="quantity" value="@item.Count" size="2" id="input-quantity" class="form-control">
+
+                                                            <button asp-controller="ShopCart" asp-action="IncrementQuantity"
+                                                            asp-route-shopCartItemId="@item.Id" type="submit">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                                <form asp-controller="ShopCart" asp-action="RemoveFromCart"
+                                              asp-route-shopCartItemId="@item.Id" method="post">
+                                                    <span class="input-group-btn">
+                                                        @Html.AntiForgeryToken()
+                                                        <button type="submit" class="btn btn-danger" data-original-title="Remove">
+                                                            <i class="fa fa-times-circle"></i>
+                                                        </button>
+                                                    </span>
+                                                </form>
+
+                                            </div>
+                                        </td>
+                                        <td class="text-right">₴@item.Price</td>
+                                        <td class="text-right">₴@(item.Price * item.Count)</td>
+                                        @{
+                                            totalPrice += item.Price * item.Count;
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-8">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-left cart-total-title">Промежуточный итог:</td>
+                                        <td class="text-right cart-total-price">₴@totalPrice</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left cart-total-title">Скидки:</td>
+                                        <td class="text-right cart-total-price">₴0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left cart-total-title">Всего:</td>
+                                        <td class="text-right cart-total-price">₴@totalPrice</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="buttons clearfix">
+                            <div class="pull-left"><a asp-controller="Home" asp-action="Index" class="btn btn-default">Продолжить покупки</a></div>
+                            <form asp-controller="Order" asp-action="Index">
+                                <div class="pull-right"><button type="submit" class="btn btn-primary">Оформить заказ</button></div>
+                            </form>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <h1 class="cart-title">
+                        Ваша корзина пуста!
+                    </h1>
+                    <div class="buttons clearfix">
+                        <div class="text-center">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-default">Начать покупать</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

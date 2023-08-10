@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PizzaStar</title>
+    <meta name="description" content="PizzaStar - Вкусная пица!">
+
+    <!-- Стили -->
+    @await Html.PartialAsync("_StylesPartial")
+    <!-- / Стили -->
+
+</head>
+<body class="homepage">
+    <div class="loader"></div>
+
+    <!-- Header Область Начало -->
+    <nav id="top">
+        <div class="container">
+            <div class="top-left">
+                <div class="contact-info">
+                    <a href="callto:+380970601478">
+                        <i class="fa fa-phone"></i>
+                        <span>+38 (097) 060-14-78</span>
+                    </a>
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="pull-left">
+                    <form action="" method="post" enctype="multipart/form-data" id="form-language">
+                        <div class="btn-group">
+                            <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+
+                                <img src="assets/images/en-gb.png" alt="English" title="English" class="language-img">
+                                <span class="drop-text">Языки</span>
+                                <span class="code">Укр-Рус</span>
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu language-dropdown dropdown-menu-right">
+                                <li>
+                                    <button class="btn btn-link btn-block language-select" type="button" name="en-gb">
+                                        <img src="assets/images/en-gb.png" alt="English" title="English">
+                                        Украинский
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link btn-block language-select" type="button" name="ar">
+                                        <img src="assets/images/ar.png" alt="Arabic" title="Arabic">
+                                        Русский
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="code" value="">
+                        <input type="hidden" name="redirect" value="">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <header class="home">
+        <div class="container">
+            <div class="header-inner">
+                <div class="header-left">
+                    <div id="logo">
+                        <a href="#">
+                            <img src="~/assets/images/logo-white.png" title="Your Store" alt="Your Store" class="img-responsive">
+                        </a>
+                    </div>
+                </div>
+                <div class="header-center">
+                    <div class="themability_megamenu-style-dev">
+                        <div class="responsive themability_default">
+
+                            <nav class="navbar-default">
+                                <div class=" container-themability_megamenu   horizontal ">
+                                    <div class="navbar-header">
+                                        <button type="button" id="show-themability_megamenu" data-toggle="collapse" class="navbar-toggle">
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="themability_megamenu-wrapper megamenu_typeheader">
+
+                                        <span id="remove-themability_megamenu" class="fa fa-times"></span>
+
+                                        <div class="themability_megamenu-pattern">
+                                            <div class="container">
+                                                <ul class="themability_megamenu" data-megamenuid="55" data-transition="slide" data-animationtime="500">
+
+                                                    <li class="home current-active active-first">
+                                                        <a href="#">
+                                                            <span><strong> Главная </strong></span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="with-sub-menu click">
+                                                        <p class="close-menu"></p>
+                                                        <a href="#" class="clearfix">
+                                                            <strong>
+                                                                Пицца
+                                                            </strong>
+
+                                                            <b class="fa fa-angle-down"></b>
+                                                        </a>
+
+                                                        <div class="sub-menu">
+                                                            <div class="content">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="categories hot">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">Pasta</a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">Fedelini</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Lasagna</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Perciatelli</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">
+                                                                                                    french
+                                                                                                    fries
+                                                                                                </a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">Sachets</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Ziti</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Rotelle</a>
+                                                                                                    </li>
+
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">Drink</a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">sosyo</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">coca-cola</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">
+                                                                                                            Cheddar
+                                                                                                            Cheese
+                                                                                                        </a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="with-sub-menu click">
+                                                        <p class="close-menu"></p>
+                                                        <a href="#" class="clearfix">
+                                                            <strong>
+                                                                Салаты
+                                                            </strong>
+
+                                                            <b class="fa fa-angle-down"></b>
+                                                        </a>
+
+                                                        <div class="sub-menu">
+                                                            <div class="content">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="categories hot">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">Pasta</a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">Fedelini</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Lasagna</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Perciatelli</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">
+                                                                                                    french
+                                                                                                    fries
+                                                                                                </a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">Sachets</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Ziti</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Rotelle</a>
+                                                                                                    </li>
+
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">Drink</a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">sosyo</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">coca-cola</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">
+                                                                                                            Cheddar
+                                                                                                            Cheese
+                                                                                                        </a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="with-sub-menu click">
+                                                        <p class="close-menu"></p>
+                                                        <a href="#" class="clearfix">
+                                                            <strong>
+                                                                Напитки
+                                                            </strong>
+
+                                                            <b class="fa fa-angle-down"></b>
+                                                        </a>
+
+                                                        <div class="sub-menu">
+                                                            <div class="content">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="categories hot">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">Pasta</a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">Fedelini</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Lasagna</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Perciatelli</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">
+                                                                                                    french
+                                                                                                    fries
+                                                                                                </a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">Sachets</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Ziti</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">Rotelle</a>
+                                                                                                    </li>
+
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-3 static-menu">
+                                                                                    <div class="menu">
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <a href="#" class="main-menu">Drink</a>
+                                                                                                <ul>
+                                                                                                    <li>
+                                                                                                        <a href="#">sosyo</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">coca-cola</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href="#">
+                                                                                                            Cheddar
+                                                                                                            Cheese
+                                                                                                        </a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <p class="close-menu"></p>
+                                                        <a href="" class="clearfix">
+                                                            <strong>
+                                                                Контакты
+                                                            </strong>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="header-right">
+                    <div class="search-content">
+                        <div class="search-btn-outer hidden-lg hidden-md">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <div class="header-search">
+                            <div id="themabilitySearch" class="input-group themability-search">
+                                <input type="text" name="search" value="" placeholder="Поиск..." class="form-control input-lg ui-autocomplete-input" />
+                                <span class="btn-search input-group-btn">
+                                    <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart-content">
+                        <div id="cart" class="btn-group btn-block">
+                            <button type="button" data-toggle="dropdown" data-loading-text="<i class='fa fa-spinner fa-spin' aria-hidden='true'></i>"
+                                    class="btn btn-inverse btn-block btn-lg dropdown-toggle">
+                                <i class="fa fa-shopping-cart"></i> <span id="cart-total">2</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div id="header_ac" class="dropdown">
+                        <a href="#" title="My Account" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i><span class="hidden">My Account</span><span class="caret hidden"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
+                            <li>
+                                <a href="#">Регистрация</a>
+                            </li>
+                            <li><a href="#">Авторизация</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <!-- Header Область Конец -->
+
+    <div class="container-full ">
+        @RenderBody()
+    </div>
+
+    <!-- Footer Область Начало -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="position-footer-left">
+                            <h5 class="toggled title">
+                                Контакты
+                            </h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <div class="site">
+                                        <div class="contact_title"><i class="fa-solid fa-location-dot"></i></div>
+                                        <div class="contact_site">Украина, Днепр, проспект Свободы 23.</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="phone">
+                                        <div class="contact_title"><i class="fa fa-phone"></i></div>
+                                        <div class="contact_site">+38 (097) 060-14-78</div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="email">
+                                        <div class="contact_title"><i class="fa fa-envelope"></i></div>
+                                        <div class="contact_site">
+                                            <a href="mailto:email@gmail.com" class="contact_site">
+                                                <span class="__cf_email__">
+                                                    email@gmail.com
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="toggled">Меню</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="contact_site">Главная</a></li>
+                            <li><a href="#" class="contact_site">Пицца</a></li>
+                            <li><a href="#" class="contact_site">Салаты</a></li>
+                            <li><a href="#" class="contact_site">Напитки</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="toggled">Дополнительно</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="contact_site">Доставка</a></li>
+                            <li><a href="#" class="contact_site">Контакты</a></li>
+                            <li><a href="#">Карта сайта</a></li>
+                            <li><a href="#">Мой Аккаунт</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-footer-right">
+                            <div class="follow-link">
+                                <h4>Социальные сети</h4>
+                                <div class="social-media">
+                                    <a href="index.html#" title="facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="index.html#" title="facebook"><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="index.html#" title="facebook"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="index.html#" title="facebook"><i class="fa-brands fa-pinterest-p"></i></a>
+                                    <a href="index.html#" title="facebook"><i class="fa-brands fa-youtube"></i></a>
+                                </div>
+                            </div>
+                            <div class="payment-link">
+                                <h4>Платежные системы</h4>
+                                <div class="payment-method">
+                                    <a><i class="fa-brands fa-cc-visa"></i></a>
+                                    <a><i class="fa fa-credit-card"></i></a>
+                                    <a><i class="fa-brands fa-cc-mastercard"></i></a>
+                                    <a><i class="fa-brands fa-cc-paypal"></i></a>
+                                    <a><i class="fa-brands fa-cc-discover"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright"><a href="index.html#"></a>© 2023 PizzaStar - Все права защищены.</p>
+        </div>
+    </footer>
+    <!-- Footer Область Конец -->
+
+	<!-- Скрипты -->
+    <!-- Секция для подгрузки скриптов из других представлений -->
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Секция для подгрузки основных скриптов из частичного представления -->
+    @await Html.PartialAsync("_ScriptsPartial")
+    <!-- / Скрипты -->
+
+</body>
+</html>

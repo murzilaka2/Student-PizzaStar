@@ -1,0 +1,122 @@
+﻿@using PizzaStar.Models.Checkout;
+@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Мои заказы";
+    decimal totalPrice = 0;
+}
+
+
+<div class="blog-section">
+    <div id="checkout-cart" class="container">
+        <div class="row">
+            <div id="content" class="col-sm-12">
+                <div class="breadcrumb-main">
+                    <div class="breadcrumb-container clearfix">
+                        <h1 class="page-title">Мои заказы</h1>
+                        <ul class="breadcrumb">
+                            <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
+                            <li><a asp-controller="Order" asp-action="MyOrders">Мои заказы</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                @if (Model.Count() > 0)
+                {
+                    <div class="row g-4 py-5 row-cols-1 ">
+                        <div class="input-group themability-search">
+                            @{
+                                ViewBag.searches = new string[] { "Address", "City", "User.PhoneNumber" };
+                            }
+                            @await Html.PartialAsync("_SearchOptions", Model)
+                        </div>
+
+                        @foreach (var order in Model)
+                        {
+                            <div class="themability-newsletter-form block-content box-content">
+                                <h1 class="cart-title">
+                                    @order.City, @order.Address (@order.CreatedAt.ToShortDateString())
+                                </h1>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered themability-newsletter-form">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center">Изображение</td>
+                                                <td class="text-center">Название</td>
+                                                <td class="text-center">Бренд</td>
+                                                <td class="text-center">Количество</td>
+                                                <td class="text-center">Цена за ед.</td>
+                                                <td class="text-right">Итог</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (OrderDetails orderDetails in order.OrderDetails)
+                                            {
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <img src="@orderDetails.Product.Image" alt="@orderDetails.Product.Name"
+                                                             title="@orderDetails.Product.Name" class="img-thumbnail checkout-img">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a asp-controller="Home" asp-action="GetProduct" asp-route-productId="@orderDetails.Product.Id"
+                                               asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                                                            @orderDetails.Product.Name
+                                                        </a> <br>
+                                                    </td>
+                                                    <td class="text-center">@orderDetails.Product.Brand</td>
+                                                    <td class="text-center">@orderDetails.Quantity</td>
+                                                    <td class="text-center">₴@orderDetails.Product.Price</td>
+                                                    <td class="text-right">₴@(orderDetails.Product.Price * orderDetails.Quantity)</td>
+                                                    @{
+                                                        totalPrice += orderDetails.Product.Price * orderDetails.Quantity;
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-sm-offset-8">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-left cart-total-title">Промежуточный итог:</td>
+                                                    <td class="text-right cart-total-price">₴@totalPrice</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left cart-total-title">Скидки:</td>
+                                                    <td class="text-right cart-total-price">₴0.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left cart-total-title">Всего:</td>
+                                                    <td class="text-right cart-total-price">₴@totalPrice</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                @{
+                                    totalPrice = 0;
+                                }
+                            </div>
+                        }
+                        <div class="text-center">
+                            @await Html.PartialAsync("_Pages", Model)
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <h1 class="cart-title">
+                        У вас еще не было заказов.
+                    </h1>
+                    <div class="buttons clearfix">
+                        <div class="text-center">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-default">Начать покупать</a>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

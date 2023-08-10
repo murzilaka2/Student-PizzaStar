@@ -1,0 +1,53 @@
+﻿@using PizzaStar.ViewModels;
+@model OrderViewModel
+
+<div class="row justify-content-center">
+    <div class="col-sm-4">
+        <div class="well mt-5">
+            <h3>Оформление заказа</h3>
+            <form method="post" asp-controller="Order" asp-action="FinishOrderNonAuthenticated">
+                <div asp-validation-summary="ModelOnly"></div>
+
+                <div class="form-group">
+                    <label asp-for="Fio" class="control-label"></label>
+                    <input asp-for="Fio" class="form-control" />
+                    <span asp-validation-for="Fio" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="mt-3"></div>
+
+                <div class="form-group text-center">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Завершить заказ" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Для валидации модели на клиенте*@
+@await Html.PartialAsync("_ValidationScriptsPartial")

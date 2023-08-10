@@ -1,0 +1,95 @@
+﻿@using PizzaStar.Data.Helpers;
+@{
+    Layout = "~/Views/Panel/_PanelLayout.cshtml";
+    ViewData["Title"] = "Продукты";
+}
+@model IEnumerable<Product>
+
+<div class="breadcrumb-main">
+    <div class="breadcrumb-container clearfix">
+        <h1 class="page-title">Панель управления</h1>
+        <ul class="breadcrumb">
+            <li><a asp-action="Index" asp-controller="Panel">Главная</a></li>
+            <li><a asp-action="Dishes" asp-controller="Dish">Продукты</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row g-4 py-5 row-cols-1">
+
+    <a asp-action="CreateProduct" asp-controller="Dish" class="btn btn-primary">Добавить новый продукт</a>
+
+    <div class="input-group themability-search">
+        @{
+            ViewBag.searches = new string[] { "Name", "Brand", "Description", "Category.Name" };
+        }
+        @await Html.PartialAsync("_SearchOptions", Model)
+    </div>
+
+    <div class="p-5 mb-4 bg-light rounded-3 ovx table-responsive">
+        <table class="table">
+            <tr><th>Название</th><th>Описание</th><th>Цена</th><th>Категория</th><th>Бренд</th><th>Тип</th><th></th><th></th></tr>
+            @foreach (var product in Model)
+            {
+                @*Обязательно прописываем данный атрибут
+            С помощью него мы удалим данную строку,
+            используя JavaScript*@
+                <tr data-rowid="@product.Id">
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price</td>
+                    <td>@product.Category?.Name</td>
+                    <td>@product.Brand</td>
+                    <td>@product.Type.GetDescription()</td>
+                    <td><a class="btn btn-sm btn-primary" asp-action="EditProduct" asp-controller="Dish" asp-route-productId="@product.Id">Изменить</a></td>
+                    <td>
+                        @*Обязательно прописываем onClick и метод, который будет обрабатывать клик*@
+                        <button onclick="deleteProduct('@product.Id')" class="btn btn-sm btn-danger">Удалить</button>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div class="text-center">
+            @await Html.PartialAsync("_Pages", Model)
+        </div>
+
+        @await Html.PartialAsync("_Modal", "Удалить выбранный продукт?")
+
+        @section Scripts {
+            <script>
+                async function deleteProduct(productId) {
+
+                    const btnYes = document.getElementById('btn-Yes');
+                    const btnNo = document.getElementById('btn-No');
+
+                    console.log(productId);
+                    $('#confirmModal').modal('show');
+
+                    //Если нажали да, удаляем
+                    btnYes.onclick = () => {
+                        const deleteItem = fetch(`/panel/delete-product/?productId=${productId}`, { method: 'DELETE' })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                //Удаляем строку
+                                document.querySelector("tr[data-rowid='" + productId + "']").remove();
+                                //Закрываем модальное окно
+                                $('#confirmModal').modal('hide');
+                            })
+                            .catch(error => {
+                                console.error('There was a problem with the fetch operation:', error);
+                                // Обработка ошибки удаления
+                            });
+                    }
+                    //Если нажали нет, скрываем
+                    btnNo.onclick = () => {
+                        $('#confirmModal').modal('hide');
+                    }
+                }
+            </script>
+        }
+
+    </div>
+</div>

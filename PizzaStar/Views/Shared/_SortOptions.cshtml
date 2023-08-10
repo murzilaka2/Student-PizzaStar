@@ -1,0 +1,43 @@
+﻿<div class="sort-cat">
+    <div class="text-category-sort">
+        <label class="input-group-addon" for="input-sort">Сортировать по:</label>
+    </div>
+    <div class="select-cat-sort">
+        <select form="pageform" name="options.OrderPropertyName" class="form-control">
+            @foreach (string s in ViewBag.sorts as string[])
+            {
+                string value = s.IndexOf('.') == -1 ? s : s.Substring(s.IndexOf('.') + 1);
+                <option value="@s" selected="@(Model.Options.OrderPropertyName == s)">
+                    @(
+                        s switch
+                        {
+                            "Price" => "Стоимость",
+                            "Calories" => "Калорийность",
+                            "Weight" => "Вес",
+                            "Name" => "Название",
+                            "Description" => "Описание",
+                            "Brand" => "Бренд",
+                            "Category.Name" => "Категория",
+                            _ => value
+                        }
+                        )
+                </option>
+            }
+        </select>
+    </div>
+</div>
+<div class="limit-cat">
+    <div class="text-category-limit">
+        <label class="input-group-addon" for="input-limit">По Убыванию:</label>
+    </div>
+    <div class="text-category-limit">
+        <input form="pageform" type="checkbox" name="Options.DescendingOrder" id="Options.DescendingOrder" class="form-check-input"
+               value="true" checked="@Model.Options.DescendingOrder" style="margin: 8px 0 0" />&nbsp&nbsp;
+    </div>
+    <div class="text-category-limit">
+        <button form="pageform" class="btn btn-success" type="submit"
+                style="background: var(--secondary-hover-color);">
+            Сортировать
+        </button>
+    </div>
+</div>

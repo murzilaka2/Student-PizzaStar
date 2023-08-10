@@ -1,0 +1,40 @@
+﻿@model (string Name, int Quantity)
+
+<div class="modal" id="confirmProductModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Успешно добавлено!</h5>
+            </div>
+            <div class="modal-body">
+                <p>@Model.Name, в количестве @Model.Quantity добавлено в корзину.</p>
+            </div>
+            <div class="modal-footer">
+                <a asp-action="Index" asp-controller="ShopCart" class="btn btn-secondary">В корзину</a>
+                <button id="btn-No" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        //При открытии формы, указываем всплывающее окно
+        $("#confirmProductModal").modal('show');
+        // Close modal on button click
+        $(".btn").click(function () {
+            $("#confirmProductModal").modal('hide');
+        });
+        //Событие закрытие формы (закрыть форму могут нажав в любом месте
+        // за формой или по кнопку, поэтому обрабатываем в событии закрытия)
+        $("#confirmProductModal").on("hidden.bs.modal", function () {
+            //Обращаемся к корзине и обновляем количество товара
+            var shopCart = document.getElementById("cartProductNumber");
+            console.log(shopCart);
+            const quantity = parseInt(shopCart.innerText);
+            console.log(quantity);
+            shopCart.innerText = (quantity + 1);
+        });
+    });
+</script>

@@ -1,0 +1,92 @@
+﻿@using PizzaStar.ViewModels;
+@{
+    Layout = "~/Views/Panel/_PanelLayout.cshtml";
+    ViewData["Title"] = "Редактирование продукта";
+}
+@model ProductViewModel
+
+<div class="row justify-content-center">
+    <div class="col-sm-12">
+        <div class="well mt-5">
+            <h3>Редактирование продукта</h3>
+            <form asp-action="EditProduct" asp-controller="Dish" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Название</label>
+                    <input type="text" asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label">Тип продукта</label>
+                    @Html.DropDownList("Type", Html.GetEnumSelectList(typeof(ProductType)), new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Описание</label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AllCategories" class="control-label">Категория</label>
+                    @*Указываем ID выбранной категории*@
+                    @Html.DropDownListFor(e => e.CategoryId, Model.AllCategories, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label asp-for="File" class="control-label">Изображение</label>
+                    @if (Model.Image != null)
+                    {
+                        <div class="category-img col-sm-3">
+                            <img src="@Model.Image" alt="@Model.Name" class="img-responsive">
+                        </div>
+                    }
+                    <input type="file" class="form-control" asp-for="File" accept="image/*" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Weight" class="control-label">Вес</label>
+                    <input type="text" asp-for="Weight" class="form-control" />
+                    <span asp-validation-for="Weight" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Calories" class="control-label">Калории</label>
+                    <input type="text" asp-for="Calories" class="form-control" />
+                    <span asp-validation-for="Calories" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label">Стоимость</label>
+                    <input type="text" asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Brand" class="control-label">Производитель</label>
+                    <input type="text" asp-for="Brand" class="form-control" />
+                    <span asp-validation-for="Brand" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Для валидации модели на клиенте*@
+@await Html.PartialAsync("_ValidationScriptsPartial")
+
+@section Scripts {
+    <script>
+        // переопределение валидации на стороне клиента
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+    </script>
+}
